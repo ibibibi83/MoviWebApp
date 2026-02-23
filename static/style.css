@@ -1,0 +1,111 @@
+/* =====================
+   Global
+===================== */
+/** {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    font-family: Arial, Helvetica, sans-serif;*/
+/*}*/
+/**/
+/*body {*/
+/*    background-color: #f5f7fb;*/
+/*    color: #1f2937;*/
+/*}*/
+
+/* =====================
+   Header
+===================== */
+header {
+    background-color: #2563eb;
+    color: white;
+    padding: 20px 40px;
+}
+
+header h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* =====================
+   Main Container
+===================== */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+    padding: 3rem;
+}
+
+/* =====================
+   Section Titles
+===================== */
+h2 {
+    margin-bottom: 20px;
+}
+/* =====================
+   User Cards
+===================== */
+.user-grid {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+}
+.user-grid span{
+    font-size: large;
+    font-weight: bold;
+}
+.card {
+    display:flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+ul{
+    list-style: none;
+
+}
+
+
+/* =====================
+   Buttons
+===================== */
+.button{
+    all:unset;
+    padding:0.5rem 2rem ;
+    background-color: #2563eb;
+    color:white;
+    border-radius: 12px;
+    text-decoration: none;
+
+}
+input{
+    all:unset;
+    border: 2px solid #c2c1c1;
+    border-radius: 12px;
+    padding:0.5rem;
+    width: 70%;
+}
+/* =====================
+   Add User Box
+===================== */
+
+
+/* =====================
+   Footer
+===================== */
+footer {
+    background-color: #1e40af;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 60px;
+    font-size: 14px;
+}

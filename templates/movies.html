@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Movies of {{ user.name }}</h2>
+<a class="btn" href="/">← Back to Users</a>
+{% if movies %}
+  <ul>
+    {% for movie in movies %}
+      <div class ="movie">
+          <div>
+            <strong>{{ movie.name }}</strong><br>
+            Year: {{ movie.year }}<br>
+            Director: {{ movie.director }}
+            <img src="{{movie.poster_url}}">  
+          </div>
+          <form action="{{url_for('delete_user_movie',movie_id=movie.id)}}" method="post">
+            <button type="submit" class="button"> Delete</button>
+          </form>
+      </div>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No movies found for this user.</p>
+{% endif %}
+<div class="card">
+        <h2>Add new Movie</h2>
+        <form action="{{ url_for('add_movie_to_user',user_id=user.id) }}" method="post">
+            <input
+                type="text"
+                name="title"
+                placeholder="Type Movie Title"
+                required
+            />
+          <input
+                type="text"
+                name="year"
+                placeholder="(optional) Type Movie Year"
+            />
+            <button type="submit" class="button">
+                Save
+            </button>
+        </form>
+    {% if movie_not_found %}
+        <span>Filmdaten nicht gefunden</span>
+        {% endif %}
+    </div>
+
+
+{% endblock %}
