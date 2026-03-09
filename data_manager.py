@@ -1,17 +1,29 @@
 from models import db, User, Movie
 
+
 class DataManager():
+
     def create_user(self, user):
-        db.session.add(user)
-        db.session.commit()
+        try:
+            db.session.add(user)
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+            raise
 
     def get_users(self):
+        try:
+            return User.query.all()
+        except Exception:
+            raise
 
-        return User.query.all() # TODO: Try exceptn jeder datenbank error handling inkl docstrings
 
     def get_user(self, id):
-        user = db.session.get(User, id)
-        return user
+        try:
+            user = db.session.get(User, id)
+            return user
+        except Exception:
+            raise
 
 
     def get_movies(self, user_id):
@@ -27,7 +39,11 @@ class DataManager():
                 the given user. Returns an empty list if the user
                 has no movies.
         """
-        return Movie.query.filter_by(user_id=user_id).all()
+        try:
+            return Movie.query.filter_by(user_id=user_id).all()
+        except Exception:
+            raise
+
 
     def add_movie(self, movie, user_id):
         """
@@ -42,14 +58,22 @@ class DataManager():
             Movie: The newly created Movie object after it has
                 been committed to the database.
         """
-        movies = self.get_movies(user_id)
-        if movie.name not in movies:
-            db.session.add(movie)
-            db.session.commit()
-            return movie
-        return None
+        try:
+            movies = self.get_movies(user_id)
 
-    def update_movie(self, movie_id, new_title,):
+            if movie.name not in movies:
+                db.session.add(movie)
+                db.session.commit()
+                return movie
+
+            return None
+
+        except Exception:
+            db.session.rollback()
+            raise
+
+
+    def update_movie(self, movie_id, new_title):
         """
         Update the title of an existing movie.
 
@@ -61,14 +85,21 @@ class DataManager():
             Movie | None: The updated Movie object if the movie
                 exists, otherwise None.
         """
-        movie = Movie.query.get(movie_id)
+        try:
+            movie = Movie.query.get(movie_id)
 
-        if not movie:
-            return None
+            if not movie:
+                return None
 
-        movie.title = new_title
-        db.session.commit()
-        return movie
+            movie.title = new_title
+            db.session.commit()
+
+            return movie
+
+        except Exception:
+            db.session.rollback()
+            raise
+
 
     def delete_movie(self, movie_id):
         """
@@ -81,12 +112,17 @@ class DataManager():
             bool: True if the movie was successfully deleted,
                 False if no movie with the given ID exists.
         """
-        movie = Movie.query.get(movie_id)
+        try:
+            movie = Movie.query.get(movie_id)
 
-        if not movie:
-            return False
+            if not movie:
+                return False
 
-        db.session.delete(movie)
-        db.session.commit()
-        return True
+            db.session.delete(movie)
+            db.session.commit()
 
+            return True
+
+        except Exception:
+            db.session.rollback()
+            raise
