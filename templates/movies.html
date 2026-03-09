@@ -4,16 +4,25 @@
 
 <h2>Movies of {{ user.name }}</h2>
 <a class="btn" href="/">← Back to Users</a>
+{% if movie_exist %}
+    <p style = "color:red;">Filmdaten bestehen schon</p>
+{% endif %}
+{% if movie_not_found %}
+    <p style = "color:red;">Filmdaten nicht gefunden!</p>
+{% endif %}
 {% if movies %}
   <ul>
     {% for movie in movies %}
       <div class ="movie">
-          <div>
-            <strong>{{ movie.name }}</strong><br>
-            Year: {{ movie.year }}<br>
-            Director: {{ movie.director }}
-            <img src="{{movie.poster_url}}">  
-          </div>
+          <form action="{{url_for('update_user_movie',movie_id=movie.id)}}" method="post">
+              <div>
+                <input label = "movie_name" type = "text" value ="{{ movie.name }}">
+                   <button type="submit" class="button"> Save</button>
+                <p>Year: {{ movie.year }}</p>
+                <p>Director: {{ movie.director }}</p>
+                <img src="{{movie.poster_url}}">
+              </div>
+          </form>
           <form action="{{url_for('delete_user_movie',movie_id=movie.id)}}" method="post">
             <button type="submit" class="button"> Delete</button>
           </form>
@@ -41,9 +50,7 @@
                 Save
             </button>
         </form>
-    {% if movie_not_found %}
-        <span>Filmdaten nicht gefunden</span>
-        {% endif %}
+
     </div>
 
 

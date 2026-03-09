@@ -20,7 +20,12 @@ header {
     color: white;
     padding: 20px 40px;
 }
-
+.movie{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
 header h1 {
     font-size: 24px;
     font-weight: bold;

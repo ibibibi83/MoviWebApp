@@ -6,14 +6,9 @@ class DataManager():
         db.session.commit()
 
     def get_users(self):
-        #Gibt
-        # eine
-        # Liste
-        # aller
-        # Nutzer in deiner
-        # Datenbank
-        # zurück.
-        return User.query.all()
+
+        return User.query.all() # TODO: Try exceptn jeder datenbank error handling inkl docstrings
+
     def get_user(self, id):
         user = db.session.get(User, id)
         return user
@@ -34,7 +29,7 @@ class DataManager():
         """
         return Movie.query.filter_by(user_id=user_id).all()
 
-    def add_movie(self, movie):
+    def add_movie(self, movie, user_id):
         """
         Add a new movie to the database.
 
@@ -47,9 +42,12 @@ class DataManager():
             Movie: The newly created Movie object after it has
                 been committed to the database.
         """
-        db.session.add(movie)
-        db.session.commit()
-        return movie
+        movies = self.get_movies(user_id)
+        if movie.name not in movies:
+            db.session.add(movie)
+            db.session.commit()
+            return movie
+        return None
 
     def update_movie(self, movie_id, new_title,):
         """
